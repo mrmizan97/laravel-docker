@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+    nginx:
+        image: nginx:alpine
+        container_name: laravel-docker-nginx
+        restart: unless-stopped
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - ./:var/www/html:cached
+            - ./.docker/nginx:/etc/nginx/conf.d/
+            - ./.docker/nginx:/etc/nginx/conf.d/ssl
+        networks:
+            - laravel-docker-network
+networks:
+    laravel-docker-network:
+        driver: bridge
+
+volumes:
+    laravel-docker-volume:
+        driver: local
